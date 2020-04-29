@@ -1,2 +1,2 @@
-include ':app', ':ui'
+include ':app', ':ui', ':eyer_wand_editor_lib'
 rootProject.name='EyerWandEditorAndroid'
