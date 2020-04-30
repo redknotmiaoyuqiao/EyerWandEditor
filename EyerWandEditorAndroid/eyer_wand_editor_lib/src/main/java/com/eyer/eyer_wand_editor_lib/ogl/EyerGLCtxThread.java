@@ -14,7 +14,9 @@ public class EyerGLCtxThread implements EyerWandObject {
     }
 
     public int stop(){
-        return EyerWandNative.ogl_stop_thread(nativeId);
+        int ret = EyerWandNative.ogl_stop_thread(nativeId);
+        nativeId = 0;
+        return ret;
     }
 
     public int setWH(int w, int h){
