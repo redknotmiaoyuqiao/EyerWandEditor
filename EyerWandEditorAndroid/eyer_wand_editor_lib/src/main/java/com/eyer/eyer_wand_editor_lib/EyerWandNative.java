@@ -15,4 +15,9 @@ public class EyerWandNative {
     public static native int                    crop_get_crop_height                        (long crop);
     public static native int                    crop_crop                                   (long crop, int crop_type);
 
+    // OpenGL
+    public static native long                   ogl_create_thread                           (android.view.Surface surface);
+    // public static native long                   ogl_create_thread                           ();
+    public static native int                    ogl_stop_thread                             (long thread);
+    public static native int                    ogl_set_wh                                  (long thread, int w, int h);
 }
