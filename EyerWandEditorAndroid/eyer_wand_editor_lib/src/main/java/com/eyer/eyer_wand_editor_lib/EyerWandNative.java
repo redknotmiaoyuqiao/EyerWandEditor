@@ -20,4 +20,10 @@ public class EyerWandNative {
     // public static native long                   ogl_create_thread                           ();
     public static native int                    ogl_stop_thread                             (long thread);
     public static native int                    ogl_set_wh                                  (long thread, int w, int h);
+    public static native int                    ogl_add_task_to_render_queue                (long thread, long render_task);
+    public static native int                    ogl_add_task_to_destory_queue                (long thread, long render_task);
+
+    // Render Task
+    public static native long                   render_task_init                            (String name);
+    public static native int                    render_task_uninit                          (long render_task);
 }

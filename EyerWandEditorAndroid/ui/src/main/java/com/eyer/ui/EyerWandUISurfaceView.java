@@ -8,6 +8,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.eyer.eyer_wand_editor_lib.ogl.EyerGLCtxThread;
+import com.eyer.eyer_wand_editor_lib.rendertask.EyerGLRenderTask;
 
 public class EyerWandUISurfaceView extends SurfaceView implements SurfaceHolder.Callback{
 
@@ -46,5 +47,9 @@ public class EyerWandUISurfaceView extends SurfaceView implements SurfaceHolder.
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         glCtxThread.stop();
         glCtxThread.destory();
+    }
+
+    public int addRenderTask(EyerGLRenderTask renderTask){
+        return glCtxThread.addTaskToRenderQueue(renderTask);
     }
 }
