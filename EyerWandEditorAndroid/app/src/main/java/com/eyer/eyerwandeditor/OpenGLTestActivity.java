@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.eyer.eyer_wand_editor_lib.rendertask.EyerGLRenderTask;
 import com.eyer.ui.EyerWandUISurfaceView;
+import com.eyer.ui.EyerWandUISurfaceViewListener;
 
 public class OpenGLTestActivity extends AppCompatActivity {
 
@@ -22,19 +23,21 @@ public class OpenGLTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opengl_test);
 
-        renderTask = new EyerGLRenderTask("");
-
         surfaceview = findViewById(R.id.surfaceview);
         btn_add_julia = findViewById(R.id.btn_add_julia);
 
+        surfaceview.setListener(new MyEyerWandUISurfaceViewListener());
+
         btn_add_julia.setOnClickListener(new MyClickListener());
+
+        renderTask = new EyerGLRenderTask("");
     }
 
     private class MyClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            surfaceview.addRenderTask(renderTask);
+            surfaceview.addTaskToRenderQueue(renderTask);
         }
     }
 
@@ -42,5 +45,19 @@ public class OpenGLTestActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         renderTask.destory();
+    }
+
+    private class MyEyerWandUISurfaceViewListener implements EyerWandUISurfaceViewListener
+    {
+        @Override
+        public int onCreated(EyerWandUISurfaceView surfaceView) {
+            surfaceView.addTaskToDestoryQueue(renderTask);
+            return 0;
+        }
+
+        @Override
+        public int onDestroyed(EyerWandUISurfaceView surfaceView) {
+            return 0;
+        }
     }
 }

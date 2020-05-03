@@ -12,6 +12,7 @@ import com.eyer.eyer_wand_editor_lib.rendertask.EyerGLRenderTask;
 
 public class EyerWandUISurfaceView extends SurfaceView implements SurfaceHolder.Callback{
 
+    private EyerWandUISurfaceViewListener listener = null;
     private EyerGLCtxThread glCtxThread = null;
 
     public EyerWandUISurfaceView(Context context) {
@@ -33,9 +34,17 @@ public class EyerWandUISurfaceView extends SurfaceView implements SurfaceHolder.
         getHolder().addCallback(this);
     }
 
+    public void setListener(EyerWandUISurfaceViewListener listener){
+        this.listener = listener;
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         glCtxThread = new EyerGLCtxThread(surfaceHolder.getSurface());
+
+        if(this.listener != null){
+            this.listener.onCreated(this);
+        }
     }
 
     @Override
@@ -45,11 +54,19 @@ public class EyerWandUISurfaceView extends SurfaceView implements SurfaceHolder.
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        if(this.listener != null){
+            this.listener.onDestroyed(this);
+        }
+
         glCtxThread.stop();
         glCtxThread.destory();
     }
 
-    public int addRenderTask(EyerGLRenderTask renderTask){
+    public int addTaskToRenderQueue(EyerGLRenderTask renderTask){
         return glCtxThread.addTaskToRenderQueue(renderTask);
+    }
+
+    public int addTaskToDestoryQueue(EyerGLRenderTask renderTask){
+        return glCtxThread.addTaskToDestoryQueue(renderTask);
     }
 }

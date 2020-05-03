@@ -26,4 +26,12 @@ public class EyerWandNative {
     // Render Task
     public static native long                   render_task_init                            (String name);
     public static native int                    render_task_uninit                          (long render_task);
+
+
+    // AV Reader
+    public static native long                   avreader_init                               (String url);
+    public static native int                    avreader_uninit                             (long avreader);
+    public static native int                    avreader_open                               (long avreader);
+    public static native int                    avreader_close                              (long avreader);
+    public static native int                    avreader_print_info                         (long avreader);
 }

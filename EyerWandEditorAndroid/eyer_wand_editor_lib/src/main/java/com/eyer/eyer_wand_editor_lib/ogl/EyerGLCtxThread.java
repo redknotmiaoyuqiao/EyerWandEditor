@@ -28,6 +28,10 @@ public class EyerGLCtxThread implements EyerWandObject {
         return EyerWandNative.ogl_add_task_to_render_queue(nativeId, task.nativeId);
     }
 
+    public int addTaskToDestoryQueue(EyerGLRenderTask task){
+        return EyerWandNative.ogl_add_task_to_destory_queue(nativeId, task.nativeId);
+    }
+
     @Override
     public int destory() {
         return 0;
