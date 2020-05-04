@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Button crop_test_btn = null;
     private Button opengl_test_btn = null;
     private Button av_test_btn = null;
+    private Button wand_context_btn = null;
 
     private TextView version_txt = null;
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         crop_test_btn = findViewById(R.id.crop_test_btn);
         opengl_test_btn = findViewById(R.id.opengl_test_btn);
         av_test_btn = findViewById(R.id.av_test_btn);
+        wand_context_btn = findViewById(R.id.wand_context_btn);
 
         version_txt = findViewById(R.id.version_txt);
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         crop_test_btn.setOnClickListener(listener);
         opengl_test_btn.setOnClickListener(listener);
         av_test_btn.setOnClickListener(listener);
+        wand_context_btn.setOnClickListener(listener);
 
         version_txt.setText(EyerWandVersion.getVersion());
 
@@ -65,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
             }
             if(view == av_test_btn){
                 Intent intent = new Intent(MainActivity.this, AVTestActivity.class);
+                startActivity(intent);
+            }
+            if(view == wand_context_btn){
+                Intent intent = new Intent(MainActivity.this, EyerWandContextTestActivity.class);
                 startActivity(intent);
             }
         }

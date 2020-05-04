@@ -21,7 +21,7 @@ public class EyerWandNative {
     public static native int                    ogl_stop_thread                             (long thread);
     public static native int                    ogl_set_wh                                  (long thread, int w, int h);
     public static native int                    ogl_add_task_to_render_queue                (long thread, long render_task);
-    public static native int                    ogl_add_task_to_destory_queue                (long thread, long render_task);
+    public static native int                    ogl_add_task_to_destory_queue               (long thread, long render_task);
 
     // Render Task
     public static native long                   render_task_init                            (String name);
@@ -34,4 +34,11 @@ public class EyerWandNative {
     public static native int                    avreader_open                               (long avreader);
     public static native int                    avreader_close                              (long avreader);
     public static native int                    avreader_print_info                         (long avreader);
+
+    // Eyer Wand Context
+    public static native long                   wand_context_init                           (int w, int h, int fps);
+    public static native int                    wand_context_uninit                         (long wand_ctx);
+    public static native int                    wand_context_set_gl_ctx                     (long wand_ctx, long thread);
+    public static native int                    wand_context_render_frame                   (long wand_ctx, double time);
+
 }

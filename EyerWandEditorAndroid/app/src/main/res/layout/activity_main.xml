@@ -38,6 +38,12 @@
             android:id="@+id/av_test_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <Button
+            android:text="Wand Context"
+            android:id="@+id/wand_context_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </RelativeLayout>

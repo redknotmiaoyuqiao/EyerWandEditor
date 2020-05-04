@@ -8,7 +8,7 @@ import com.eyer.eyer_wand_editor_lib.rendertask.EyerGLRenderTask;
 
 public class EyerGLCtxThread implements EyerWandObject {
 
-    private long nativeId = 0;
+    public long nativeId = 0;
 
     public EyerGLCtxThread(Surface surface){
         nativeId = EyerWandNative.ogl_create_thread(surface);
