@@ -23,6 +23,7 @@
         <activity android:name=".OpenGLRenderTestActivity"></activity>
         <activity android:name=".AVTestActivity"></activity>
         <activity android:name=".EyerWandContextTestActivity"></activity>
+        <activity android:name=".SnapshotTestActivity"></activity>
     </application>
 
 </manifest>
