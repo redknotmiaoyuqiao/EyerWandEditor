@@ -31,8 +31,6 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
         render_frame_btn = findViewById(R.id.render_frame_btn);
         render_frame_btn.setOnClickListener(new MyClickListener());
 
-        wandContext = new EyerWandContext(1280, 720, 30);
-
         eyer_wand_ctx_surfaceview.setListener(new MyEyerWandUISurfaceViewListener());
     }
 
@@ -54,6 +52,7 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
     {
         @Override
         public int onCreated(EyerWandUISurfaceView surfaceView) {
+            wandContext = new EyerWandContext(1280, 720, 30);
             wandContext.setGL(eyer_wand_ctx_surfaceview.getGlCtx());
             return 0;
         }
@@ -61,6 +60,7 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
         @Override
         public int onDestroyed(EyerWandUISurfaceView surfaceView) {
             wandContext.destory();
+            wandContext = null;
             return 0;
         }
     }
