@@ -1,5 +1,7 @@
 package com.eyer.eyer_wand_editor_lib;
 
+import android.graphics.Bitmap;
+
 public class EyerWandNative {
 
     static {
@@ -40,5 +42,10 @@ public class EyerWandNative {
     public static native int                    wand_context_uninit                         (long wand_ctx);
     public static native int                    wand_context_set_gl_ctx                     (long wand_ctx, long thread);
     public static native int                    wand_context_render_frame                   (long wand_ctx, double time);
+
+    // Snapshot
+    public static native long                   wand_snapshot_init                          (String url);
+    public static native int                    wand_snapshot_uninit                        (long snapshot);
+    public static native int                    wand_snapshot_bitmap                        (long snapshot, double time, Bitmap bitmap);
 
 }
