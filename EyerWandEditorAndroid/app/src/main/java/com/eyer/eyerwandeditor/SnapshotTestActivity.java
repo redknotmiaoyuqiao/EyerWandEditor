@@ -3,27 +3,43 @@ package com.eyer.eyerwandeditor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eyer.eyer_wand_editor_lib.av.EyerAVSnapshot;
+import com.eyer.eyerwandeditor.adapter.SnapshotAdapter;
+import com.eyer.eyerwandeditor.adapter.SnapshotBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SnapshotTestActivity extends AppCompatActivity {
 
-    private ImageView bitmap_imageview = null;
+    private RecyclerView snapshot_recyclerview = null;
+    private List<SnapshotBean> snapshotBeanList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snapshot_test);
 
-        bitmap_imageview = findViewById(R.id.bitmap_imageview);
+        snapshot_recyclerview = findViewById(R.id.snapshot_recyclerview);
+        snapshotBeanList = new ArrayList<SnapshotBean>();
 
-        EyerAVSnapshot myEyerAVSnapshot = new EyerAVSnapshot("");
-        Bitmap bitmap = Bitmap.createBitmap(1024, 1024, Bitmap.Config.ARGB_8888);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        snapshot_recyclerview.setLayoutManager(layoutManager);
+        SnapshotAdapter adapter = new SnapshotAdapter(snapshotBeanList);
+        snapshot_recyclerview.setAdapter(adapter);
 
-        myEyerAVSnapshot.snapshot(0.0, bitmap);
+        double maxTime = 60.0;
+        for(double t=0;t<maxTime;t+=0.5){
+            SnapshotBean snapshotBean = new SnapshotBean(t);
+            snapshotBeanList.add(snapshotBean);
+        }
 
-        bitmap_imageview.setImageBitmap(bitmap);
+        adapter.notifyDataSetChanged();
     }
 }
