@@ -14,7 +14,10 @@ public class EyerAVSnapshot implements EyerWandObject {
     }
 
     public Bitmap snapshot(double time, Bitmap bitmap){
-        EyerWandNative.wand_snapshot_bitmap(nativeId, time, bitmap);
+        int ret = EyerWandNative.wand_snapshot_bitmap(nativeId, time, bitmap);
+        if(ret != 0){
+            return null;
+        }
         return bitmap;
     }
 

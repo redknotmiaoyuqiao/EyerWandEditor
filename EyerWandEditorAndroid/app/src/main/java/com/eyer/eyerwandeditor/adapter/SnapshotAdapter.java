@@ -2,6 +2,7 @@ package com.eyer.eyerwandeditor.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
@@ -39,7 +40,6 @@ public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHo
             snapshot_item_image = (ImageView) view.findViewById(R.id.snapshot_item_image);
             snapshot_item_time = (TextView) view.findViewById(R.id.snapshot_item_time);
         }
-
     }
 
     private List<SnapshotBean> snapshotBeanList = null;
@@ -53,7 +53,7 @@ public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHo
         this.snapshotBeanList = snapshotBeanList;
 
         myEyerAVSnapshot = new EyerAVSnapshot("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
-        bitmapLruCache = new LruCache<Double, Bitmap>(10);
+        bitmapLruCache = new LruCache<Double, Bitmap>(8);
         ing = new HashMap<Double, Object>();
     }
 
@@ -95,11 +95,31 @@ public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHo
         }
         else{
             Bitmap bitmap = Bitmap.createBitmap(720, 1280, Bitmap.Config.ARGB_8888);
-            bitmap = myEyerAVSnapshot.snapshot(snapshotBean.getTime(), bitmap);
-            viewHolder.snapshot_item_image.setImageBitmap(bitmap);
+            Bitmap bitmapOut = myEyerAVSnapshot.snapshot(snapshotBean.getTime(), bitmap);
 
-            bitmapLruCache.put(snapshotBean.getTime(), bitmap);
+            if(bitmapOut != null){
+                Bitmap bbb = scaleBitmap(bitmapOut, 0.3f);
+                viewHolder.snapshot_item_image.setImageBitmap(bbb);
+                bitmapLruCache.put(snapshotBean.getTime(), bbb);
+            }
+            bitmap.recycle();
         }
+    }
+
+    private Bitmap scaleBitmap(Bitmap origin, float ratio) {
+        if (origin == null) {
+            return null;
+        }
+        int width = origin.getWidth();
+        int height = origin.getHeight();
+        Matrix matrix = new Matrix();
+        matrix.preScale(ratio, ratio);
+        Bitmap newBM = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
+        if (newBM.equals(origin)) {
+            return newBM;
+        }
+        origin.recycle();
+        return newBM;
     }
 
     @Override
