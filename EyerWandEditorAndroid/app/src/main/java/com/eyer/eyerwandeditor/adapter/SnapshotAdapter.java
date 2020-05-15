@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHolder> {
 
@@ -47,7 +50,7 @@ public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHo
     private EyerAVSnapshot myEyerAVSnapshot = null;
     private LruCache<Double, Bitmap> bitmapLruCache = null;
     private Map<Double, Object> ing = null;
-
+    private ThreadPoolExecutor threadPoolExecutor = null;
 
     public SnapshotAdapter(List<SnapshotBean> snapshotBeanList){
         this.snapshotBeanList = snapshotBeanList;
@@ -55,6 +58,8 @@ public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHo
         myEyerAVSnapshot = new EyerAVSnapshot("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
         bitmapLruCache = new LruCache<Double, Bitmap>(8);
         ing = new HashMap<Double, Object>();
+
+        this.threadPoolExecutor = new ThreadPoolExecutor(1,100,1, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>(50));
     }
 
     @NonNull
@@ -94,15 +99,13 @@ public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHo
             viewHolder.snapshot_item_image.setImageBitmap(b);
         }
         else{
-            Bitmap bitmap = Bitmap.createBitmap(720, 1280, Bitmap.Config.ARGB_8888);
-            Bitmap bitmapOut = myEyerAVSnapshot.snapshot(snapshotBean.getTime(), bitmap);
+            viewHolder.snapshot_item_image.setImageBitmap(null);
+            if(ing.get(snapshotBean.getTime()) == null){
 
-            if(bitmapOut != null){
-                Bitmap bbb = scaleBitmap(bitmapOut, 0.3f);
-                viewHolder.snapshot_item_image.setImageBitmap(bbb);
-                bitmapLruCache.put(snapshotBean.getTime(), bbb);
             }
-            bitmap.recycle();
+            GetSnapshotThread t = new GetSnapshotThread(new MyHandler(viewHolder.snapshot_item_image), snapshotBean.getTime());
+            this.threadPoolExecutor.execute(t);
+            // new Thread(t).start();
         }
     }
 
@@ -148,6 +151,9 @@ public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHo
             ing.remove(bitmapBean.time);
 
             this.imageView.setImageBitmap(bitmapBean.bitmap);
+
+            bitmapLruCache.put(bitmapBean.time, bitmapBean.bitmap);
+
         }
     }
 
@@ -166,6 +172,8 @@ public class SnapshotAdapter extends RecyclerView.Adapter<SnapshotAdapter.ViewHo
             synchronized (myEyerAVSnapshot){
                 Bitmap bitmap = Bitmap.createBitmap(720, 1280, Bitmap.Config.ARGB_8888);
                 bitmap = myEyerAVSnapshot.snapshot(this.time, bitmap);
+
+                bitmap = scaleBitmap(bitmap, 0.3f);
 
                 Message msg = new Message();
 
