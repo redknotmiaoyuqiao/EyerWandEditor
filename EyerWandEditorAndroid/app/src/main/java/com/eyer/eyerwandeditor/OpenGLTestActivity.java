@@ -29,8 +29,6 @@ public class OpenGLTestActivity extends AppCompatActivity {
         surfaceview.setListener(new MyEyerWandUISurfaceViewListener());
 
         btn_add_julia.setOnClickListener(new MyClickListener());
-
-        renderTask = new EyerGLRenderTask("");
     }
 
     private class MyClickListener implements View.OnClickListener {
@@ -44,19 +42,20 @@ public class OpenGLTestActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        renderTask.destory();
     }
 
     private class MyEyerWandUISurfaceViewListener implements EyerWandUISurfaceViewListener
     {
         @Override
         public int onCreated(EyerWandUISurfaceView surfaceView) {
+            renderTask = new EyerGLRenderTask("");
             surfaceView.addTaskToDestoryQueue(renderTask);
             return 0;
         }
 
         @Override
         public int onDestroyed(EyerWandUISurfaceView surfaceView) {
+            renderTask.destory();
             return 0;
         }
     }

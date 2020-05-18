@@ -19,7 +19,7 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
     private TextView render_frame_txt = null;
     private Button render_frame_btn = null;
 
-    private double time = 0.0;
+    private int frameIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,9 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
     private class MyClickListener implements View.OnClickListener  {
         @Override
         public void onClick(View v) {
-            time = time + 1.0;
-            render_frame_txt.setText("" + time);
-            wandContext.renderFrame(time);
+            frameIndex++;
+            render_frame_txt.setText("Frame Index: " + frameIndex);
+            wandContext.renderFrameByIndex(frameIndex);
         }
     }
 

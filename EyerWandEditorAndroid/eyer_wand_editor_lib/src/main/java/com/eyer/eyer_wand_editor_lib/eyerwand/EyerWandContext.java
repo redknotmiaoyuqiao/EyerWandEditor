@@ -20,6 +20,10 @@ public class EyerWandContext implements EyerWandObject {
         return EyerWandNative.wand_context_render_frame(nativeId, time);
     }
 
+    public int renderFrameByIndex(int frameIndex){
+        return EyerWandNative.wand_context_render_frame_index(nativeId, frameIndex);
+    }
+
     @Override
     public int destory() {
         EyerWandNative.wand_context_uninit(nativeId);
