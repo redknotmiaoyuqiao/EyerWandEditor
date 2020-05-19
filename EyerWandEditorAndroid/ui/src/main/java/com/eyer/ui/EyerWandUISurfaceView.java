@@ -54,6 +54,10 @@ public class EyerWandUISurfaceView extends SurfaceView implements SurfaceHolder.
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        if(this.listener != null){
+            this.listener.onBeforeDestroy(this);
+        }
+
         glCtxThread.stop();
         glCtxThread.destory();
 

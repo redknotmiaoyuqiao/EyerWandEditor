@@ -54,6 +54,11 @@ public class OpenGLTestActivity extends AppCompatActivity {
         }
 
         @Override
+        public int onBeforeDestroy(EyerWandUISurfaceView surfaceView) {
+            return 0;
+        }
+
+        @Override
         public int onDestroyed(EyerWandUISurfaceView surfaceView) {
             renderTask.destory();
             return 0;

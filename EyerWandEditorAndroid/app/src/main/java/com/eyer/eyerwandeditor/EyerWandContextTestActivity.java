@@ -42,9 +42,11 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
     private class MyClickListener implements View.OnClickListener  {
         @Override
         public void onClick(View v) {
-            frameIndex++;
-            render_frame_txt.setText("Frame Index: " + frameIndex);
-            wandContext.renderFrameByIndex(frameIndex);
+            if(wandContext != null){
+                frameIndex++;
+                render_frame_txt.setText("Frame Index: " + frameIndex);
+                wandContext.renderFrameByIndex(frameIndex);
+            }
         }
     }
 
@@ -58,9 +60,15 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
         }
 
         @Override
-        public int onDestroyed(EyerWandUISurfaceView surfaceView) {
+        public int onBeforeDestroy(EyerWandUISurfaceView surfaceView) {
             wandContext.destory();
             wandContext = null;
+
+            return 0;
+        }
+
+        @Override
+        public int onDestroyed(EyerWandUISurfaceView surfaceView) {
             return 0;
         }
     }
