@@ -3,11 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.eyer.ui.EyerWandUISurfaceView
-        android:id="@+id/eyer_wand_ctx_surfaceview"
+
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="300dip">
-    </com.eyer.ui.EyerWandUISurfaceView>
+        android:layout_height="match_parent">
+        <com.eyer.ui.EyerWandUISurfaceView
+            android:id="@+id/eyer_wand_ctx_surfaceview"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.eyer.ui.EyerWandUISurfaceView>
+
+        <com.eyer.ui.view.EyerWandTimeLineView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.eyer.ui.view.EyerWandTimeLineView>
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"

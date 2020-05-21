@@ -16,10 +16,6 @@ public class EyerWandContext implements EyerWandObject {
         return EyerWandNative.wand_context_set_gl_ctx(nativeId, glCtx.nativeId);
     }
 
-    public int renderFrame(double time){
-        return EyerWandNative.wand_context_render_frame(nativeId, time);
-    }
-
     public int renderFrameByIndex(int frameIndex){
         return EyerWandNative.wand_context_render_frame_index(nativeId, frameIndex);
     }
