@@ -3,9 +3,11 @@ package com.eyer.ui.view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.eyer.eyer_wand_editor_lib.EyerWandNative;
+import com.eyer.ui.draw.EyerWandDrawEventList;
 
 public class EyerWandTimeLineView extends View {
 
@@ -41,6 +43,14 @@ public class EyerWandTimeLineView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        timeLine.draw();
+        EyerWandDrawEventList eventList = new EyerWandDrawEventList();
+
+        timeLine.draw(eventList);
+
+
+        int count = eventList.getCount();
+        Log.e("EyerWandTimeLineView", "Event Count: " + count);
+
+        eventList.destory();
     }
 }

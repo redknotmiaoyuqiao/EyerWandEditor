@@ -2,6 +2,7 @@ package com.eyer.ui.view;
 
 import com.eyer.eyer_wand_editor_lib.EyerWandNative;
 import com.eyer.eyer_wand_editor_lib.base.EyerWandObject;
+import com.eyer.ui.draw.EyerWandDrawEventList;
 
 public class EyerWandTimeLine implements EyerWandObject {
 
@@ -11,8 +12,8 @@ public class EyerWandTimeLine implements EyerWandObject {
         nativeId = EyerWandNative.wand_view_timeline_init();
     }
 
-    public int draw(){
-        return EyerWandNative.wand_view_timeline_draw(nativeId);
+    public int draw(EyerWandDrawEventList eventList){
+        return EyerWandNative.wand_view_timeline_draw(nativeId, eventList.getNativeId());
     }
 
     @Override

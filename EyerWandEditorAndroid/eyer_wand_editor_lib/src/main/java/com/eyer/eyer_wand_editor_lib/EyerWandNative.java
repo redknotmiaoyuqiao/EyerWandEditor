@@ -51,5 +51,10 @@ public class EyerWandNative {
     // TimeLine
     public static native long                   wand_view_timeline_init                     ();
     public static native int                    wand_view_timeline_uninit                   (long timeline);
-    public static native int                    wand_view_timeline_draw                     (long timeline);
+    public static native int                    wand_view_timeline_draw                     (long timeline, long event_list);
+
+    // TimeLine Draw Event List
+    public static native long                   wand_view_draw_event_list_init              ();
+    public static native int                    wand_view_draw_event_list_uninit            (long event_list);
+    public static native int                    wand_view_draw_event_list_size              (long event_list);
 }
