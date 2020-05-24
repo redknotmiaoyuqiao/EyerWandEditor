@@ -57,4 +57,9 @@ public class EyerWandNative {
     public static native long                   wand_view_draw_event_list_init              ();
     public static native int                    wand_view_draw_event_list_uninit            (long event_list);
     public static native int                    wand_view_draw_event_list_size              (long event_list);
+
+    // Draw Event
+    public static native long                   wand_view_draw_event_init                   ();
+    public static native int                    wand_view_draw_event_uninit                 (long event);
+    public static native int                    wand_view_draw_event_get_type               (long event);
 }
