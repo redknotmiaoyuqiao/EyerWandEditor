@@ -40,7 +40,6 @@ public class EyerWandNative {
     public static native int                    wand_context_uninit                         (long wand_ctx);
     public static native int                    wand_context_set_gl_ctx                     (long wand_ctx, long thread);
     public static native int                    wand_context_update_screen_wh               (long wand_ctx, int screenW, int screenH);
-    public static native int                    wand_context_render_frame                   (long wand_ctx, double time);
     public static native int                    wand_context_render_frame_index             (long wand_ctx, int frame_index);
 
     // Snapshot
@@ -48,4 +47,19 @@ public class EyerWandNative {
     public static native int                    wand_snapshot_uninit                        (long snapshot);
     public static native int                    wand_snapshot_bitmap                        (long snapshot, double time, Bitmap bitmap);
 
+
+    // TimeLine
+    public static native long                   wand_view_timeline_init                     ();
+    public static native int                    wand_view_timeline_uninit                   (long timeline);
+    public static native int                    wand_view_timeline_draw                     (long timeline, long event_list);
+
+    // TimeLine Draw Event List
+    public static native long                   wand_view_draw_event_list_init              ();
+    public static native int                    wand_view_draw_event_list_uninit            (long event_list);
+    public static native int                    wand_view_draw_event_list_size              (long event_list);
+
+    // Draw Event
+    public static native long                   wand_view_draw_event_init                   ();
+    public static native int                    wand_view_draw_event_uninit                 (long event);
+    public static native int                    wand_view_draw_event_get_type               (long event);
 }
