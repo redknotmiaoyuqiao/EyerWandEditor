@@ -50,7 +50,11 @@ public class EyerWandTimeLineView extends View {
         int count = eventList.getCount();
         Log.e("EyerWandTimeLineView", "Event Count: " + count);
 
+        for(int i=0;i<count;i++){
+            int type = eventList.getEventType(i);
 
+            Log.e("EyerWandTimeLineView", "Event Type: " + type);
+        }
 
         eventList.destory();
     }

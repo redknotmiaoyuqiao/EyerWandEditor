@@ -15,6 +15,10 @@ public class EyerWandDrawEventList implements EyerWandObject {
         return EyerWandNative.wand_view_draw_event_list_size(nativeId);
     }
 
+    public int getEventType(int index){
+        return EyerWandNative.wand_view_draw_event_list_get_event_type(nativeId, index);
+    }
+
     @Override
     public int destory() {
         if(nativeId != 0){
