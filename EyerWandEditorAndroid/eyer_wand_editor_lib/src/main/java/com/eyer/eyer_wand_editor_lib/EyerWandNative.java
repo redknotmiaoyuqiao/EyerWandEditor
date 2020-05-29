@@ -51,6 +51,7 @@ public class EyerWandNative {
     // TimeLine
     public static native long                   wand_view_timeline_init                     ();
     public static native int                    wand_view_timeline_uninit                   (long timeline);
+    public static native int                    wand_view_timeline_set_wh                   (long timeline, float w, float h);
     public static native int                    wand_view_timeline_draw                     (long timeline, long event_list);
 
     // TimeLine Draw Event List
@@ -58,10 +59,44 @@ public class EyerWandNative {
     public static native int                    wand_view_draw_event_list_uninit            (long event_list);
     public static native int                    wand_view_draw_event_list_size              (long event_list);
     public static native int                    wand_view_draw_event_list_get_event_type    (long event_list, int index);
-    public static native int                    wand_view_draw_event_list_get_event         (long event_list, long event, int index);
 
-    // Draw Event
-    public static native long                   wand_view_draw_event_init                   ();
-    public static native int                    wand_view_draw_event_uninit                 (long event);
-    public static native int                    wand_view_draw_event_get_type               (long event);
+    public static native int                    wand_view_draw_event_list_get_rect_event    (long event_list, long rect_event, int index);
+    public static native int                    wand_view_draw_event_list_get_line_event    (long event_list, long line_event, int index);
+    public static native int                    wand_view_draw_event_list_get_text_event    (long event_list, long text_event, int index);
+
+
+
+    // Rect Draw Event
+    public static native long                   wand_view_draw_event_rect_init              ();
+    public static native int                    wand_view_draw_event_rect_uninit            (long rect_event);
+
+    public static native float                  wand_view_draw_event_rect_get_start_x       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_start_y       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_end_x         (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_end_y         (long rect_event);
+
+    public static native float                  wand_view_draw_event_rect_get_color_r       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_color_g       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_color_b       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_color_a       (long rect_event);
+
+
+
+    // Line Draw Event
+    public static native long                   wand_view_draw_event_line_init              ();
+    public static native int                    wand_view_draw_event_line_uninit            (long line_event);
+
+    public static native float                  wand_view_draw_event_line_get_start_x       (long rect_event);
+    public static native float                  wand_view_draw_event_line_get_start_y       (long rect_event);
+    public static native float                  wand_view_draw_event_line_get_end_x         (long rect_event);
+    public static native float                  wand_view_draw_event_line_get_end_y         (long rect_event);
+
+    public static native float                  wand_view_draw_event_line_get_color_r       (long rect_event);
+    public static native float                  wand_view_draw_event_line_get_color_g       (long rect_event);
+    public static native float                  wand_view_draw_event_line_get_color_b       (long rect_event);
+    public static native float                  wand_view_draw_event_line_get_color_a       (long rect_event);
+
+    // Text Draw Event
+    public static native long                   wand_view_draw_event_text_init              ();
+    public static native int                    wand_view_draw_event_text_uninit            (long text_event);
 }
