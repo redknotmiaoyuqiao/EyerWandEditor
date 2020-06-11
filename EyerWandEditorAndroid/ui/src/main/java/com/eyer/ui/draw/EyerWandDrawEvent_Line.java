@@ -40,6 +40,10 @@ public class EyerWandDrawEvent_Line extends EyerWandObject {
         return color;
     }
 
+    public int getStrokeWidth(){
+        return EyerWandNative.wand_view_draw_event_line_get_strokewidth(nativeId);
+    }
+
     @Override
     public int destory() {
         if(nativeId != 0L){

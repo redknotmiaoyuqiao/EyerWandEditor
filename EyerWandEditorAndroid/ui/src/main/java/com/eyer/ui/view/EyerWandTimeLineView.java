@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.eyer.eyer_wand_editor_lib.math.Vec2;
@@ -43,6 +44,7 @@ public class EyerWandTimeLineView extends View {
 
     private void init() {
         timeLine = new EyerWandTimeLine();
+        setOnTouchListener(new MyOnTouchListener());
     }
 
     @Override
@@ -80,6 +82,7 @@ public class EyerWandTimeLineView extends View {
                     Paint p = new Paint();
                     int c = Color.argb((int)(color.getW() * 255), (int)(color.getX() * 255), (int)(color.getY() * 255), (int)(color.getZ() * 255));
                     p.setColor(c);
+                    p.setStrokeWidth(line.getStrokeWidth());
 
                     Vec2 start = line.getStart();
                     Vec2 end = line.getEnd();
@@ -115,5 +118,26 @@ public class EyerWandTimeLineView extends View {
         }
 
         eventList.destory();
+    }
+
+    private class MyOnTouchListener implements OnTouchListener{
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            float x = motionEvent.getX();
+            float y = motionEvent.getY();
+
+            if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+                timeLine.setTouchUp(x, y);
+            }
+            if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                timeLine.setTouchDown(x, y);
+            }
+            if(motionEvent.getAction() == MotionEvent.ACTION_MOVE){
+                timeLine.setTouchMove(x, y);
+            }
+
+            invalidate();
+            return true;
+        }
     }
 }

@@ -22,6 +22,18 @@ public class EyerWandTimeLine extends EyerWandObject {
         return setWH(w * 1.0f, h * 1.0f);
     }
 
+    public int setTouchUp(float x, float y) {
+        return EyerWandNative.wand_view_timeline_on_touch_up(nativeId, x, y);
+    }
+
+    public int setTouchDown(float x, float y) {
+        return EyerWandNative.wand_view_timeline_on_touch_down(nativeId, x, y);
+    }
+
+    public int setTouchMove(float x, float y) {
+        return EyerWandNative.wand_view_timeline_on_touch_move(nativeId, x, y);
+    }
+
     @Override
     public int destory() {
         if(nativeId != 0L){
