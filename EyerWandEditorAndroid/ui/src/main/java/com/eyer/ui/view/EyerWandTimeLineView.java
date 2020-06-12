@@ -115,6 +115,11 @@ public class EyerWandTimeLineView extends View {
 
                 rect.destory();
             }
+
+            if(type == EyerWandDrawEventType.BITMAP){
+                Log.e("EyerWandTimeLineView", "Event Type: BITMAP");
+                // canvas.drawBitmap();
+            }
         }
 
         eventList.destory();
