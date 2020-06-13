@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import com.eyer.eyer_wand_editor_lib.EyerWandNative;
 import com.eyer.eyer_wand_editor_lib.base.EyerWandObject;
 
-public class EyerAVSnapshot implements EyerWandObject {
-
-    private long nativeId = 0;
+public class EyerAVSnapshot extends EyerWandObject {
 
     public EyerAVSnapshot(String url){
         nativeId = EyerWandNative.wand_snapshot_init(url);
@@ -23,7 +21,11 @@ public class EyerAVSnapshot implements EyerWandObject {
 
     @Override
     public int destory() {
-        EyerWandNative.wand_snapshot_uninit(nativeId);
+        if(nativeId != 0L){
+            EyerWandNative.wand_snapshot_uninit(nativeId);
+            nativeId = 0L;
+        }
+
         return 0;
     }
 }

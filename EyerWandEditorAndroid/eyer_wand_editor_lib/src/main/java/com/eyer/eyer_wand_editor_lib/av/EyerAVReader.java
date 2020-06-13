@@ -3,9 +3,7 @@ package com.eyer.eyer_wand_editor_lib.av;
 import com.eyer.eyer_wand_editor_lib.EyerWandNative;
 import com.eyer.eyer_wand_editor_lib.base.EyerWandObject;
 
-public class EyerAVReader implements EyerWandObject {
-
-    private long nativeId = 0;
+public class EyerAVReader extends EyerWandObject {
 
     public EyerAVReader(String url){
         nativeId = EyerWandNative.avreader_init(url);
@@ -25,7 +23,11 @@ public class EyerAVReader implements EyerWandObject {
 
     @Override
     public int destory() {
-        EyerWandNative.avreader_uninit(nativeId);
+        if(nativeId != 0L){
+            EyerWandNative.avreader_uninit(nativeId);
+            nativeId = 0L;
+        }
+
         return 0;
     }
 }

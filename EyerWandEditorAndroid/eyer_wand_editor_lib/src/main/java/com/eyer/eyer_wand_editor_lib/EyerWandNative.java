@@ -51,15 +51,89 @@ public class EyerWandNative {
     // TimeLine
     public static native long                   wand_view_timeline_init                     ();
     public static native int                    wand_view_timeline_uninit                   (long timeline);
+    public static native int                    wand_view_timeline_set_wh                   (long timeline, float w, float h);
     public static native int                    wand_view_timeline_draw                     (long timeline, long event_list);
+    public static native int                    wand_view_timeline_on_touch_up              (long timeline, float x, float y);
+    public static native int                    wand_view_timeline_on_touch_down            (long timeline, float x, float y);
+    public static native int                    wand_view_timeline_on_touch_move            (long timeline, float x, float y);
+
 
     // TimeLine Draw Event List
     public static native long                   wand_view_draw_event_list_init              ();
     public static native int                    wand_view_draw_event_list_uninit            (long event_list);
     public static native int                    wand_view_draw_event_list_size              (long event_list);
+    public static native int                    wand_view_draw_event_list_get_event_type    (long event_list, int index);
 
-    // Draw Event
-    public static native long                   wand_view_draw_event_init                   ();
-    public static native int                    wand_view_draw_event_uninit                 (long event);
-    public static native int                    wand_view_draw_event_get_type               (long event);
+    public static native int                    wand_view_draw_event_list_get_rect_event    (long event_list, long rect_event,      int index);
+    public static native int                    wand_view_draw_event_list_get_line_event    (long event_list, long line_event,      int index);
+    public static native int                    wand_view_draw_event_list_get_text_event    (long event_list, long text_event,      int index);
+    public static native int                    wand_view_draw_event_list_get_bitmap_event  (long event_list, long bitmap_event,    int index);
+
+
+    // Rect Draw Event
+    public static native long                   wand_view_draw_event_rect_init              ();
+    public static native int                    wand_view_draw_event_rect_uninit            (long rect_event);
+
+    public static native float                  wand_view_draw_event_rect_get_start_x       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_start_y       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_end_x         (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_end_y         (long rect_event);
+
+    public static native float                  wand_view_draw_event_rect_get_color_r       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_color_g       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_color_b       (long rect_event);
+    public static native float                  wand_view_draw_event_rect_get_color_a       (long rect_event);
+
+
+
+    // Line Draw Event
+    public static native long                   wand_view_draw_event_line_init              ();
+    public static native int                    wand_view_draw_event_line_uninit            (long line_event);
+
+    public static native float                  wand_view_draw_event_line_get_start_x       (long line_event);
+    public static native float                  wand_view_draw_event_line_get_start_y       (long line_event);
+    public static native float                  wand_view_draw_event_line_get_end_x         (long line_event);
+    public static native float                  wand_view_draw_event_line_get_end_y         (long line_event);
+
+    public static native float                  wand_view_draw_event_line_get_color_r       (long line_event);
+    public static native float                  wand_view_draw_event_line_get_color_g       (long line_event);
+    public static native float                  wand_view_draw_event_line_get_color_b       (long line_event);
+    public static native float                  wand_view_draw_event_line_get_color_a       (long line_event);
+
+    public static native int                    wand_view_draw_event_line_get_strokewidth   (long line_event);
+
+    // Text Draw Event
+    public static native long                   wand_view_draw_event_text_init              ();
+    public static native int                    wand_view_draw_event_text_uninit            (long text_event);
+
+
+    // Bitmap Draw Event
+    public static native long                   wand_view_draw_event_bitmap_init              ();
+    public static native int                    wand_view_draw_event_bitmap_uninit            (long bitmap_event);
+
+    public static native int                    wand_view_draw_event_bitmap_get_src           (long bitmap_event, long vec4);
+    public static native int                    wand_view_draw_event_bitmap_get_dist          (long bitmap_event, long vec4);
+
+
+
+    // vec2
+    public static native long                   wand_vec2_init                                ();
+    public static native int                    wand_vec2_uninit                              (long vec2);
+    public static native float                  wand_vec2_get_x                               (long vec2);
+    public static native float                  wand_vec2_get_y                               (long vec2);
+
+    // vec3
+    public static native long                   wand_vec3_init                                ();
+    public static native int                    wand_vec3_uninit                              (long vec3);
+    public static native float                  wand_vec3_get_x                               (long vec3);
+    public static native float                  wand_vec3_get_y                               (long vec3);
+    public static native float                  wand_vec3_get_z                               (long vec3);
+
+    // vec4
+    public static native long                   wand_vec4_init                                ();
+    public static native int                    wand_vec4_uninit                              (long vec4);
+    public static native float                  wand_vec4_get_x                               (long vec4);
+    public static native float                  wand_vec4_get_y                               (long vec4);
+    public static native float                  wand_vec4_get_z                               (long vec4);
+    public static native float                  wand_vec4_get_w                               (long vec4);
 }

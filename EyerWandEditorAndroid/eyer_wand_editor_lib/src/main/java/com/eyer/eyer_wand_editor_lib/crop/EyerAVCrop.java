@@ -3,9 +3,7 @@ package com.eyer.eyer_wand_editor_lib.crop;
 import com.eyer.eyer_wand_editor_lib.EyerWandNative;
 import com.eyer.eyer_wand_editor_lib.base.EyerWandObject;
 
-public class EyerAVCrop implements EyerWandObject {
-
-    private long nativeId = 0;
+public class EyerAVCrop extends EyerWandObject {
 
     public EyerAVCrop(int viewW, int viewH, int imageW, int imageH) {
         nativeId = EyerWandNative.crop_init(viewW, viewH, imageW, imageH);
@@ -13,8 +11,10 @@ public class EyerAVCrop implements EyerWandObject {
 
     @Override
     public int destory() {
-        EyerWandNative.crop_uninit(nativeId);
-        nativeId = 0;
+        if (nativeId != 0) {
+            EyerWandNative.crop_uninit(nativeId);
+            nativeId = 0;
+        }
         return 0;
     }
 
