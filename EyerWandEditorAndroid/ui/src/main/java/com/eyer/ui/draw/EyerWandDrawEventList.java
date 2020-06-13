@@ -36,6 +36,11 @@ public class EyerWandDrawEventList extends EyerWandObject {
         return EyerWandNative.wand_view_draw_event_list_get_line_event(nativeId, line.getNativeId(), index);
     }
 
+    public int getEvent_Bitmap(int index, EyerWandDrawEvent_Bitmap bitmap)
+    {
+        return EyerWandNative.wand_view_draw_event_list_get_bitmap_event(nativeId, bitmap.getNativeId(), index);
+    }
+
     @Override
     public int destory() {
         if(nativeId != 0){

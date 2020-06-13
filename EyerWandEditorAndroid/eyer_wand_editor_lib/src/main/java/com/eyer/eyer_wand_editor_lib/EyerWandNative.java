@@ -111,18 +111,8 @@ public class EyerWandNative {
     public static native long                   wand_view_draw_event_bitmap_init              ();
     public static native int                    wand_view_draw_event_bitmap_uninit            (long bitmap_event);
 
-    public static native float                  wand_view_draw_event_bitmap_src_start_x       (long bitmap_event);
-    public static native float                  wand_view_draw_event_bitmap_src_start_y       (long bitmap_event);
-    public static native float                  wand_view_draw_event_bitmap_src_end_x         (long bitmap_event);
-    public static native float                  wand_view_draw_event_bitmap_src_end_y         (long bitmap_event);
-
-
-
-
-
-
-
-
+    public static native int                    wand_view_draw_event_bitmap_get_src           (long bitmap_event, long vec4);
+    public static native int                    wand_view_draw_event_bitmap_get_dist          (long bitmap_event, long vec4);
 
 
 
