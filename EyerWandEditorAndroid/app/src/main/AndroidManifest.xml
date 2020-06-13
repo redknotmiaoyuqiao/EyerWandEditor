@@ -24,6 +24,7 @@
         <activity android:name=".AVTestActivity"></activity>
         <activity android:name=".EyerWandContextTestActivity"></activity>
         <activity android:name=".SnapshotTestActivity"></activity>
+        <activity android:name=".VecTestActivity"></activity>
     </application>
 
 </manifest>

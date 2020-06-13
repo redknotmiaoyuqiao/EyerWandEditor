@@ -115,4 +115,35 @@ public class EyerWandNative {
     public static native float                  wand_view_draw_event_bitmap_src_start_y       (long bitmap_event);
     public static native float                  wand_view_draw_event_bitmap_src_end_x         (long bitmap_event);
     public static native float                  wand_view_draw_event_bitmap_src_end_y         (long bitmap_event);
+
+
+
+
+
+
+
+
+
+
+
+    // vec2
+    public static native long                   wand_vec2_init                                ();
+    public static native int                    wand_vec2_uninit                              (long vec2);
+    public static native float                  wand_vec2_get_x                               (long vec2);
+    public static native float                  wand_vec2_get_y                               (long vec2);
+
+    // vec3
+    public static native long                   wand_vec3_init                                ();
+    public static native int                    wand_vec3_uninit                              (long vec3);
+    public static native float                  wand_vec3_get_x                               (long vec3);
+    public static native float                  wand_vec3_get_y                               (long vec3);
+    public static native float                  wand_vec3_get_z                               (long vec3);
+
+    // vec4
+    public static native long                   wand_vec4_init                                ();
+    public static native int                    wand_vec4_uninit                              (long vec4);
+    public static native float                  wand_vec4_get_x                               (long vec4);
+    public static native float                  wand_vec4_get_y                               (long vec4);
+    public static native float                  wand_vec4_get_z                               (long vec4);
+    public static native float                  wand_vec4_get_w                               (long vec4);
 }

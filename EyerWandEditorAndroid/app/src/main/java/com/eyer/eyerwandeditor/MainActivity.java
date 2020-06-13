@@ -17,6 +17,7 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button vector_test_btn = null;
     private Button crop_test_btn = null;
     private Button opengl_test_btn = null;
     private Button av_test_btn = null;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         av_test_btn = findViewById(R.id.av_test_btn);
         wand_context_btn = findViewById(R.id.wand_context_btn);
         snapshot_btn = findViewById(R.id.snapshot_btn);
+        vector_test_btn = findViewById(R.id.vector_test_btn);
 
         version_txt = findViewById(R.id.version_txt);
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         av_test_btn.setOnClickListener(listener);
         wand_context_btn.setOnClickListener(listener);
         snapshot_btn.setOnClickListener(listener);
+        vector_test_btn.setOnClickListener(listener);
 
         version_txt.setText(EyerWandVersion.getVersion());
 
@@ -79,6 +82,10 @@ public class MainActivity extends AppCompatActivity {
             }
             if(view == snapshot_btn){
                 Intent intent = new Intent(MainActivity.this, SnapshotTestActivity.class);
+                startActivity(intent);
+            }
+            if(view == vector_test_btn){
+                Intent intent = new Intent(MainActivity.this, VecTestActivity.class);
                 startActivity(intent);
             }
         }
