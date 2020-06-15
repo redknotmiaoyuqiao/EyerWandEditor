@@ -42,6 +42,14 @@ public class EyerWandNative {
     public static native int                    wand_context_update_screen_wh               (long wand_ctx, int screenW, int screenH);
     public static native int                    wand_context_render_frame_index             (long wand_ctx, int frame_index);
 
+    public static native int                    wand_context_add_layer                      (long wand_ctx, String path, int start_frame_index, int end_frame_index);
+    public static native int                    wand_context_get_layer_count                (long wand_ctx);
+    public static native int                    wand_coutext_get_layer                      (long wand_ctx, long layer, int index);
+
+    // Eyer Wand Layer
+    public static native long                   wand_layer_init                             ();
+    public static native int                    wand_layer_uninit                           (long layer);
+
     // Snapshot
     public static native long                   wand_snapshot_init                          (String url);
     public static native int                    wand_snapshot_uninit                        (long snapshot);
@@ -51,6 +59,8 @@ public class EyerWandNative {
     // TimeLine
     public static native long                   wand_view_timeline_init                     ();
     public static native int                    wand_view_timeline_uninit                   (long timeline);
+    public static native int                    wand_view_timeline_set_wand_ctx             (long timeline, long wand_ctx);
+
     public static native int                    wand_view_timeline_set_wh                   (long timeline, float w, float h);
     public static native int                    wand_view_timeline_draw                     (long timeline, long event_list);
     public static native int                    wand_view_timeline_on_touch_up              (long timeline, float x, float y);

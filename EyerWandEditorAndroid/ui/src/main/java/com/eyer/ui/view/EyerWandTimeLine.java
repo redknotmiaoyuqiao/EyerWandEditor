@@ -2,6 +2,7 @@ package com.eyer.ui.view;
 
 import com.eyer.eyer_wand_editor_lib.EyerWandNative;
 import com.eyer.eyer_wand_editor_lib.base.EyerWandObject;
+import com.eyer.eyer_wand_editor_lib.eyerwand.EyerWandContext;
 import com.eyer.ui.draw.EyerWandDrawEventList;
 
 public class EyerWandTimeLine extends EyerWandObject {
@@ -32,6 +33,15 @@ public class EyerWandTimeLine extends EyerWandObject {
 
     public int setTouchMove(float x, float y) {
         return EyerWandNative.wand_view_timeline_on_touch_move(nativeId, x, y);
+    }
+
+    public void SetWandContext(EyerWandContext wandContext){
+        if(wandContext != null){
+            EyerWandNative.wand_view_timeline_set_wand_ctx(nativeId, wandContext.getNativeId());
+        }
+        else{
+            EyerWandNative.wand_view_timeline_set_wand_ctx(nativeId, 0L);
+        }
     }
 
     @Override

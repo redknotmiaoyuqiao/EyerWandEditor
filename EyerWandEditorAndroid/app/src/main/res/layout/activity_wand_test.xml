@@ -17,6 +17,7 @@
         </com.eyer.ui.EyerWandUISurfaceView>
 
         <com.eyer.ui.view.EyerWandTimeLineView
+            android:id="@+id/timeLineView"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

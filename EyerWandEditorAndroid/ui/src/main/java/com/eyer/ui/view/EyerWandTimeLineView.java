@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.eyer.eyer_wand_editor_lib.eyerwand.EyerWandContext;
 import com.eyer.eyer_wand_editor_lib.math.Vec2;
 import com.eyer.eyer_wand_editor_lib.math.Vec4;
 import com.eyer.eyer_wand_editor_lib.math.WandVec4;
@@ -48,6 +49,13 @@ public class EyerWandTimeLineView extends View {
             timeLine.destory();
             timeLine = null;
         }
+    }
+
+    public void SetWandContext(EyerWandContext wandContext){
+        timeLine.SetWandContext(wandContext);
+    }
+    public void UnsetWandContext(){
+        timeLine.SetWandContext(null);
     }
 
     private void init() {
