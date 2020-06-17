@@ -22,6 +22,7 @@ import com.eyer.ui.draw.EyerWandDrawEventType;
 import com.eyer.ui.draw.EyerWandDrawEvent_Bitmap;
 import com.eyer.ui.draw.EyerWandDrawEvent_Line;
 import com.eyer.ui.draw.EyerWandDrawEvent_Rect;
+import com.eyer.ui.draw.EyerWandDrawEvent_Text;
 
 public class EyerWandTimeLineView extends View {
 
@@ -151,6 +152,30 @@ public class EyerWandTimeLineView extends View {
                     canvas.drawBitmap(bitmap, null, dist, p);
                 }
             }
+
+            if(type == EyerWandDrawEventType.TEXT){
+                //Log.e("EyerWandTimeLineView", "Event Type: TEXT");
+
+                EyerWandDrawEvent_Text text = new EyerWandDrawEvent_Text();
+                int ret = eventList.getEvent_Text(i, text);
+
+                if(ret == 0){
+                    //Log.e("EyerWandTimeLineView text", text.getTextContent());
+                    Vec4 color = text.getColor();
+
+                    Paint p = new Paint();
+                    int c = Color.argb((int)(color.getW() * 255), (int)(color.getX() * 255), (int)(color.getY() * 255), (int)(color.getZ() * 255));
+                    p.setColor(c);
+                    p.setTextSize(text.getSize());
+
+                    Vec2 start = text.getStart();
+                    String textContent = text.getTextContent();
+                    canvas.drawText(textContent, start.getX(), start.getY(), p);
+                }
+
+                text.destory();
+            }
+
         }
 
         eventList.destory();
