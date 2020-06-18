@@ -112,6 +112,18 @@ public class EyerWandNative {
     public static native long                   wand_view_draw_event_text_init              ();
     public static native int                    wand_view_draw_event_text_uninit            (long text_event);
 
+    public static native float                  wand_view_draw_event_text_get_start_x       (long text_event);
+    public static native float                  wand_view_draw_event_text_get_start_y       (long text_event);
+
+    public static native String                 wand_view_draw_event_text_get_text          (long text_event);
+    public static native float                  wand_view_draw_event_text_get_size          (long text_event);
+    public static native String                 wand_view_draw_event_text_get_fontStyle     (long text_event);
+
+    public static native float                  wand_view_draw_event_text_get_color_r       (long text_event);
+    public static native float                  wand_view_draw_event_text_get_color_g       (long text_event);
+    public static native float                  wand_view_draw_event_text_get_color_b       (long text_event);
+    public static native float                  wand_view_draw_event_text_get_color_a       (long text_event);
+
 
     // Bitmap Draw Event
     public static native long                   wand_view_draw_event_bitmap_init              ();

@@ -26,6 +26,11 @@ public class EyerWandDrawEventList extends EyerWandObject {
         return rect;
     }
 
+    public int getEvent_Text(int index, EyerWandDrawEvent_Text text)
+    {
+        return EyerWandNative.wand_view_draw_event_list_get_text_event(nativeId, text.getNativeId(), index);
+    }
+
     public int getEvent_Rect(int index, EyerWandDrawEvent_Rect rect)
     {
         return EyerWandNative.wand_view_draw_event_list_get_rect_event(nativeId, rect.getNativeId(), index);
