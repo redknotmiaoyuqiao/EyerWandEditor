@@ -19,22 +19,14 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
 
     private EyerWandTimeLineView timeLineView = null;
 
-    private TextView render_frame_txt = null;
-    private Button render_frame_btn = null;
-
-    private int frameIndex = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wand_test);
 
         eyer_wand_ctx_surfaceview = findViewById(R.id.eyer_wand_ctx_surfaceview);
-        render_frame_txt = findViewById(R.id.render_frame_txt);
-        render_frame_btn = findViewById(R.id.render_frame_btn);
         timeLineView = findViewById(R.id.timeLineView);
 
-        render_frame_btn.setOnClickListener(new MyClickListener());
         eyer_wand_ctx_surfaceview.setListener(new MyEyerWandUISurfaceViewListener());
     }
 
@@ -45,17 +37,6 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
         if(timeLineView != null){
             timeLineView.destory();
             timeLineView = null;
-        }
-    }
-
-    private class MyClickListener implements View.OnClickListener  {
-        @Override
-        public void onClick(View v) {
-            if(wandContext != null){
-                frameIndex++;
-                render_frame_txt.setText("Frame Index: " + frameIndex);
-                wandContext.renderFrameByIndex(frameIndex);
-            }
         }
     }
 
