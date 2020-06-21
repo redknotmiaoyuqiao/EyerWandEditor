@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.eyer.eyer_wand_editor_lib.av.EyerAVSnapshot;
+import com.eyer.eyer_wand_editor_lib.bitmap.SnapshotCache;
 import com.eyer.eyer_wand_editor_lib.eyerwand.EyerWandContext;
 import com.eyer.eyer_wand_editor_lib.math.Vec2;
 import com.eyer.eyer_wand_editor_lib.math.Vec4;
@@ -29,8 +30,9 @@ import com.eyer.ui.draw.EyerWandDrawEvent_Text;
 public class EyerWandTimeLineView extends View {
 
     private EyerWandTimeLine timeLine = null;
-
     private Bitmap bitmap = null;
+
+    private SnapshotCache snapshotCache = null;
 
     public EyerWandTimeLineView(Context context) {
         super(context);
@@ -64,6 +66,8 @@ public class EyerWandTimeLineView extends View {
     private void init() {
         timeLine = new EyerWandTimeLine();
         setOnTouchListener(new MyOnTouchListener());
+
+        snapshotCache = new SnapshotCache();
 
         EyerAVSnapshot snapshot = new EyerAVSnapshot("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
 
@@ -193,8 +197,22 @@ public class EyerWandTimeLineView extends View {
                     String path = bitmapSnapshot.getPath();
                     double time = bitmapSnapshot.getTime();
 
-                    Log.e("PPP", "Path: " + path);
-                    Log.e("PPP", "Time: " + time);
+                    WandVec4 srcVec = new WandVec4();
+                    bitmapSnapshot.getSrc(srcVec);
+
+                    WandVec4 distVec4 = new WandVec4();
+                    bitmapSnapshot.getDist(distVec4);
+
+                    Bitmap b = snapshotCache.getCache(path, time, srcVec, distVec4);
+
+                    if(b != null){
+                        Paint p = new Paint();
+                        Rect dist = new Rect((int)distVec4.x(), (int)distVec4.y(), (int)distVec4.z(), (int)distVec4.w());
+                        canvas.drawBitmap(b, null, dist, p);
+                    }
+
+                    // Log.e("PPP", "Url: " + url);
+                    // Log.e("PPP", "x:" + srcVec.x() + ", y:" + srcVec.y() + ", z:" + srcVec.z() + ", w:" + srcVec.w());
                 }
             }
 
