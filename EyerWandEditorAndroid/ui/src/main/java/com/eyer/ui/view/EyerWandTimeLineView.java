@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.eyer.eyer_wand_editor_lib.av.EyerAVSnapshot;
 import com.eyer.eyer_wand_editor_lib.eyerwand.EyerWandContext;
 import com.eyer.eyer_wand_editor_lib.math.Vec2;
 import com.eyer.eyer_wand_editor_lib.math.Vec4;
@@ -20,6 +21,7 @@ import com.eyer.ui.R;
 import com.eyer.ui.draw.EyerWandDrawEventList;
 import com.eyer.ui.draw.EyerWandDrawEventType;
 import com.eyer.ui.draw.EyerWandDrawEvent_Bitmap;
+import com.eyer.ui.draw.EyerWandDrawEvent_BitmapSnapshot;
 import com.eyer.ui.draw.EyerWandDrawEvent_Line;
 import com.eyer.ui.draw.EyerWandDrawEvent_Rect;
 import com.eyer.ui.draw.EyerWandDrawEvent_Text;
@@ -63,7 +65,12 @@ public class EyerWandTimeLineView extends View {
         timeLine = new EyerWandTimeLine();
         setOnTouchListener(new MyOnTouchListener());
 
-        bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.miaowu);
+        EyerAVSnapshot snapshot = new EyerAVSnapshot("/storage/emulated/0/ST/time_clock_1min_720x1280_30fps.mp4");
+
+        bitmap = Bitmap.createBitmap(720, 1280, Bitmap.Config.ARGB_8888);
+        bitmap = snapshot.snapshot(12.0f, bitmap);
+
+        snapshot.destory();
     }
 
     @Override
@@ -83,6 +90,8 @@ public class EyerWandTimeLineView extends View {
 
         for(int i=0;i<count;i++){
             int type = eventList.getEventType(i);
+
+            // Log.e("TTT", "" + type);
 
             if(type == EyerWandDrawEventType.UNKNOW){
                 // Log.e("EyerWandTimeLineView", "Event Type: Unknow");
@@ -174,6 +183,19 @@ public class EyerWandTimeLineView extends View {
                 }
 
                 text.destory();
+            }
+
+            if(type == EyerWandDrawEventType.BITMAP_SNAPSHOT){
+                EyerWandDrawEvent_BitmapSnapshot bitmapSnapshot = new EyerWandDrawEvent_BitmapSnapshot();
+
+                int ret = eventList.getEvent_BitmapSnapshot(i, bitmapSnapshot);
+                if(ret == 0) {
+                    String path = bitmapSnapshot.getPath();
+                    double time = bitmapSnapshot.getTime();
+
+                    Log.e("PPP", "Path: " + path);
+                    Log.e("PPP", "Time: " + time);
+                }
             }
 
         }
