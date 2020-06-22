@@ -1,7 +1,10 @@
 package com.eyer.eyer_wand_editor_lib.bitmap;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.util.LruCache;
 
@@ -18,10 +21,22 @@ public class SnapshotCache {
 
     private ExecutorService executorService = null;
 
-    public SnapshotCache(){
+    private SnapshotCacheListener listener = null;
+    private Context context = null;
+
+    private MyHandle handle = null;
+
+    public SnapshotCache(Context context){
+        this.context = context;
         cache = new LruCache<String, Bitmap>(30);
         snapshotLruCache = new LruCache<String, EyerAVSnapshot>(3);
         executorService = Executors.newFixedThreadPool(1);
+        handle = new MyHandle();
+
+    }
+
+    public void setListener(SnapshotCacheListener listener){
+        this.listener = listener;
     }
 
     public Bitmap getCache(String path, double time, WandVec4 srcVec, WandVec4 distVec){
@@ -29,12 +44,21 @@ public class SnapshotCache {
 
         Bitmap b = cache.get(url);
         if(b == null){
-            GetSnapshotThread t = new GetSnapshotThread(path, time, srcVec, distVec);
-            // new Thread(t).start();
+            GetSnapshotThread t = new GetSnapshotThread(handle, path, time, srcVec, distVec);
             executorService.execute(t);
         }
 
         return b;
+    }
+
+    private class MyHandle extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(listener != null){
+                listener.onLoad();
+            }
+        }
     }
 
     private class GetSnapshotThread implements Runnable {
@@ -44,7 +68,10 @@ public class SnapshotCache {
         private WandVec4 srcVec = null;
         private WandVec4 distVec = null;
 
-        public GetSnapshotThread(String path, double time, WandVec4 srcVec, WandVec4 distVec){
+        private MyHandle handle = null;
+
+        public GetSnapshotThread(MyHandle handle, String path, double time, WandVec4 srcVec, WandVec4 distVec){
+            this.handle = handle;
             this.path = path;
             this.srcVec = srcVec;
             this.distVec = distVec;
@@ -74,6 +101,9 @@ public class SnapshotCache {
             b.recycle();
 
             cache.put(url, bbb);
+
+            Message msg = new Message();
+            this.handle.sendMessage(msg);
         }
     }
 
