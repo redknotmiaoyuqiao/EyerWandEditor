@@ -192,7 +192,7 @@ public class EyerWandTimeLineView extends View {
                     WandVec4 distVec4 = new WandVec4();
                     bitmapSnapshot.getDist(distVec4);
 
-                    Bitmap b = snapshotCache.getCache(path, time, srcVec, distVec4);
+                    Bitmap b = snapshotCache.getCache(path, time, distVec4);
 
                     if(b != null){
                         Paint p = new Paint();

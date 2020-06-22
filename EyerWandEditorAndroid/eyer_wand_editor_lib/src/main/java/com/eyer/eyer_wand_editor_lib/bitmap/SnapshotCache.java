@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.LruCache;
 
 import com.eyer.eyer_wand_editor_lib.av.EyerAVSnapshot;
+import com.eyer.eyer_wand_editor_lib.math.WandVec2;
 import com.eyer.eyer_wand_editor_lib.math.WandVec4;
 
 import java.util.concurrent.ExecutorService;
@@ -28,23 +29,22 @@ public class SnapshotCache {
 
     public SnapshotCache(Context context){
         this.context = context;
-        cache = new LruCache<String, Bitmap>(30);
-        snapshotLruCache = new LruCache<String, EyerAVSnapshot>(3);
-        executorService = Executors.newFixedThreadPool(1);
-        handle = new MyHandle();
-
+        this.cache = new LruCache<String, Bitmap>(30);
+        this.snapshotLruCache = new LruCache<String, EyerAVSnapshot>(3);
+        this.executorService = Executors.newFixedThreadPool(1);
+        this.handle = new MyHandle();
     }
 
     public void setListener(SnapshotCacheListener listener){
         this.listener = listener;
     }
 
-    public Bitmap getCache(String path, double time, WandVec4 srcVec, WandVec4 distVec){
+    public Bitmap getCache(String path, double time, WandVec4 distVec){
         String url = path + "?time=" + time;
 
         Bitmap b = cache.get(url);
         if(b == null){
-            GetSnapshotThread t = new GetSnapshotThread(handle, path, time, srcVec, distVec);
+            GetSnapshotThread t = new GetSnapshotThread(handle, path, time, distVec);
             executorService.execute(t);
         }
 
@@ -65,15 +65,13 @@ public class SnapshotCache {
 
         private String path = null;
         private double time = 0.0;
-        private WandVec4 srcVec = null;
         private WandVec4 distVec = null;
 
         private MyHandle handle = null;
 
-        public GetSnapshotThread(MyHandle handle, String path, double time, WandVec4 srcVec, WandVec4 distVec){
+        public GetSnapshotThread(MyHandle handle, String path, double time, WandVec4 distVec){
             this.handle = handle;
             this.path = path;
-            this.srcVec = srcVec;
             this.distVec = distVec;
             this.time = time;
         }
@@ -93,7 +91,10 @@ public class SnapshotCache {
                 snapshotLruCache.put(path, snapshot);
             }
 
-            Bitmap b = Bitmap.createBitmap((int)srcVec.z(), (int)srcVec.w(), Bitmap.Config.ARGB_8888);
+            WandVec2 wh = new WandVec2();
+            snapshot.getWH(wh);
+
+            Bitmap b = Bitmap.createBitmap((int)wh.x(), (int)wh.y(), Bitmap.Config.ARGB_8888);
             snapshot.snapshot(time, b);
 
             Bitmap bbb = scaleBitmap(b, distVec);

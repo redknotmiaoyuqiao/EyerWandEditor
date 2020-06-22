@@ -44,7 +44,7 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
     {
         @Override
         public int onCreated(EyerWandUISurfaceView surfaceView) {
-            wandContext = new EyerWandContext(800, 1280, 30);
+            wandContext = new EyerWandContext(720, 1280, 30);
             wandContext.setGL(eyer_wand_ctx_surfaceview.getGlCtx());
 
             timeLineView.SetWandContext(wandContext);

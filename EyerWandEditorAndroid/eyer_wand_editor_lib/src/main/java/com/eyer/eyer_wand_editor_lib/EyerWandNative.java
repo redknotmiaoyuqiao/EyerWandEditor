@@ -49,6 +49,7 @@ public class EyerWandNative {
     // Snapshot
     public static native long                   wand_snapshot_init                          (String url);
     public static native int                    wand_snapshot_uninit                        (long snapshot);
+    public static native int                    wand_snapshot_get_wh                        (long snapshot, long vec2);
     public static native int                    wand_snapshot_bitmap                        (long snapshot, double time, Bitmap bitmap);
 
 
