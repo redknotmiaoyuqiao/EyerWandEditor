@@ -49,6 +49,10 @@ public class EyerWandTimeLineView extends View {
             timeLine.destory();
             timeLine = null;
         }
+        if(snapshotCache != null){
+            snapshotCache.destory();
+            snapshotCache = null;
+        }
     }
 
     public void SetWandContext(EyerWandContext wandContext){
@@ -106,7 +110,6 @@ public class EyerWandTimeLineView extends View {
                     float z = color.getZ();
                     float w = color.getW();
                     long eTime = System.nanoTime();
-                    Log.e("DDD", "DTime:" + (eTime - sTime) + "==" + x + ":" + y + ":" + z + ":" + w);
 
                     Paint p = new Paint();
                     int c = Color.argb((int)(color.getW() * 255), (int)(color.getX() * 255), (int)(color.getY() * 255), (int)(color.getZ() * 255));

@@ -10,4 +10,14 @@ public abstract class EyerWandObject {
     }
 
     public abstract int destory();
+
+
+    public static int sleep(long t){
+        try {
+            Thread.sleep(t);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
