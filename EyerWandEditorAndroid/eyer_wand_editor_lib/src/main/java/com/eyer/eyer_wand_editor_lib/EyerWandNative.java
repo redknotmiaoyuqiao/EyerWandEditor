@@ -49,6 +49,7 @@ public class EyerWandNative {
     // Snapshot
     public static native long                   wand_snapshot_init                          (String url);
     public static native int                    wand_snapshot_uninit                        (long snapshot);
+    public static native int                    wand_snapshot_get_wh                        (long snapshot, long vec2);
     public static native int                    wand_snapshot_bitmap                        (long snapshot, double time, Bitmap bitmap);
 
 
@@ -74,6 +75,7 @@ public class EyerWandNative {
     public static native int                    wand_view_draw_event_list_get_line_event    (long event_list, long line_event,      int index);
     public static native int                    wand_view_draw_event_list_get_text_event    (long event_list, long text_event,      int index);
     public static native int                    wand_view_draw_event_list_get_bitmap_event  (long event_list, long bitmap_event,    int index);
+    public static native int                    wand_view_draw_event_list_get_bitmap_snapshot_event (long event_list, long bitmap_snapshot_event,    int index);
 
 
     // Rect Draw Event
@@ -124,13 +126,22 @@ public class EyerWandNative {
     public static native float                  wand_view_draw_event_text_get_color_b       (long text_event);
     public static native float                  wand_view_draw_event_text_get_color_a       (long text_event);
 
-
     // Bitmap Draw Event
     public static native long                   wand_view_draw_event_bitmap_init              ();
     public static native int                    wand_view_draw_event_bitmap_uninit            (long bitmap_event);
 
     public static native int                    wand_view_draw_event_bitmap_get_src           (long bitmap_event, long vec4);
     public static native int                    wand_view_draw_event_bitmap_get_dist          (long bitmap_event, long vec4);
+
+
+    // Bitmap Snapshot Draw Event
+    public static native long                   wand_view_draw_event_bitmap_snapshot_init               ();
+    public static native int                    wand_view_draw_event_bitmap_snapshot_uninit             (long bitmap_event);
+
+    public static native int                    wand_view_draw_event_bitmap_snapshot_get_src            (long bitmap_event, long vec4);
+    public static native int                    wand_view_draw_event_bitmap_snapshot_get_dist           (long bitmap_event, long vec4);
+    public static native String                 wand_view_draw_event_bitmap_snapshot_get_path           (long bitmap_event);
+    public static native double                 wand_view_draw_event_bitmap_snapshot_get_time           (long bitmap_event);
 
 
 

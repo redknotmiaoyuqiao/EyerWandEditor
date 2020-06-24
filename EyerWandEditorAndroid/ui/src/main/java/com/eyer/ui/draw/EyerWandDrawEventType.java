@@ -6,4 +6,5 @@ public interface EyerWandDrawEventType {
     public static final int LINE = 1;
     public static final int BITMAP = 2;
     public static final int TEXT = 3;
+    public static final int BITMAP_SNAPSHOT = 4;
 }

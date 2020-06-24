@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.eyer.eyer_wand_editor_lib.EyerWandNative;
 import com.eyer.eyer_wand_editor_lib.base.EyerWandObject;
+import com.eyer.eyer_wand_editor_lib.math.WandVec2;
 
 public class EyerAVSnapshot extends EyerWandObject {
 
@@ -17,6 +18,10 @@ public class EyerAVSnapshot extends EyerWandObject {
             return null;
         }
         return bitmap;
+    }
+
+    public int getWH(WandVec2 vec2) {
+        return EyerWandNative.wand_snapshot_get_wh(nativeId, vec2.getNativeId());
     }
 
     @Override
