@@ -49,6 +49,10 @@ public class EyerWandTimeLineView extends View {
             timeLine.destory();
             timeLine = null;
         }
+        if(snapshotCache != null){
+            snapshotCache.destory();
+            snapshotCache = null;
+        }
     }
 
     public void SetWandContext(EyerWandContext wandContext){
@@ -99,6 +103,13 @@ public class EyerWandTimeLineView extends View {
                     // Log.e("EyerWandTimeLineView", "Get Line Success");
 
                     Vec4 color = line.getColor();
+
+                    long sTime = System.nanoTime();
+                    float x = color.getX();
+                    float y = color.getY();
+                    float z = color.getZ();
+                    float w = color.getW();
+                    long eTime = System.nanoTime();
 
                     Paint p = new Paint();
                     int c = Color.argb((int)(color.getW() * 255), (int)(color.getX() * 255), (int)(color.getY() * 255), (int)(color.getZ() * 255));
