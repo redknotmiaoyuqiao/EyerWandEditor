@@ -26,10 +26,12 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        MainWindow.cpp
+        MainWindow.cpp \
+        View/EyerWandTimeLineWidget.cpp
 
 HEADERS += \
-        MainWindow.h
+        MainWindow.h \
+        View/EyerWandTimeLineWidget.hpp
 
 FORMS += \
         MainWindow.ui
