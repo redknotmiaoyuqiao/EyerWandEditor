@@ -2,24 +2,24 @@ package com.eyer.ui.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.eyer.eyer_wand_editor_lib.bitmap.SnapshotCache;
+import com.eyer.eyer_wand_editor_lib.bitmap.SnapshotCacheListener;
 import com.eyer.eyer_wand_editor_lib.eyerwand.EyerWandContext;
 import com.eyer.eyer_wand_editor_lib.math.Vec2;
 import com.eyer.eyer_wand_editor_lib.math.Vec4;
 import com.eyer.eyer_wand_editor_lib.math.WandVec4;
-import com.eyer.ui.R;
 import com.eyer.ui.draw.EyerWandDrawEventList;
 import com.eyer.ui.draw.EyerWandDrawEventType;
 import com.eyer.ui.draw.EyerWandDrawEvent_Bitmap;
+import com.eyer.ui.draw.EyerWandDrawEvent_BitmapSnapshot;
 import com.eyer.ui.draw.EyerWandDrawEvent_Line;
 import com.eyer.ui.draw.EyerWandDrawEvent_Rect;
 import com.eyer.ui.draw.EyerWandDrawEvent_Text;
@@ -27,28 +27,31 @@ import com.eyer.ui.draw.EyerWandDrawEvent_Text;
 public class EyerWandTimeLineView extends View {
 
     private EyerWandTimeLine timeLine = null;
-
-    private Bitmap bitmap = null;
+    private SnapshotCache snapshotCache = null;
 
     public EyerWandTimeLineView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public EyerWandTimeLineView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public EyerWandTimeLineView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
     public void destory() {
         if(timeLine != null){
             timeLine.destory();
             timeLine = null;
+        }
+        if(snapshotCache != null){
+            snapshotCache.destory();
+            snapshotCache = null;
         }
     }
 
@@ -59,11 +62,12 @@ public class EyerWandTimeLineView extends View {
         timeLine.SetWandContext(null);
     }
 
-    private void init() {
+    private void init(Context context) {
         timeLine = new EyerWandTimeLine();
         setOnTouchListener(new MyOnTouchListener());
 
-        bitmap = BitmapFactory.decodeResource(this.getContext().getResources(), R.drawable.miaowu);
+        snapshotCache = new SnapshotCache(context);
+        snapshotCache.setListener(new MySnapshotCacheListener());
     }
 
     @Override
@@ -84,6 +88,8 @@ public class EyerWandTimeLineView extends View {
         for(int i=0;i<count;i++){
             int type = eventList.getEventType(i);
 
+            // Log.e("TTT", "" + type);
+
             if(type == EyerWandDrawEventType.UNKNOW){
                 // Log.e("EyerWandTimeLineView", "Event Type: Unknow");
             }
@@ -97,6 +103,13 @@ public class EyerWandTimeLineView extends View {
                     // Log.e("EyerWandTimeLineView", "Get Line Success");
 
                     Vec4 color = line.getColor();
+
+                    long sTime = System.nanoTime();
+                    float x = color.getX();
+                    float y = color.getY();
+                    float z = color.getZ();
+                    float w = color.getW();
+                    long eTime = System.nanoTime();
 
                     Paint p = new Paint();
                     int c = Color.argb((int)(color.getW() * 255), (int)(color.getX() * 255), (int)(color.getY() * 255), (int)(color.getZ() * 255));
@@ -149,7 +162,7 @@ public class EyerWandTimeLineView extends View {
                     bitmapEvent.getDist(distVec4);
 
                     Rect dist = new Rect((int)distVec4.x(), (int)distVec4.y(), (int)distVec4.z(), (int)distVec4.w());
-                    canvas.drawBitmap(bitmap, null, dist, p);
+                    // canvas.drawBitmap(bitmap, null, dist, p);
                 }
             }
 
@@ -176,6 +189,33 @@ public class EyerWandTimeLineView extends View {
                 text.destory();
             }
 
+            if(type == EyerWandDrawEventType.BITMAP_SNAPSHOT){
+                EyerWandDrawEvent_BitmapSnapshot bitmapSnapshot = new EyerWandDrawEvent_BitmapSnapshot();
+
+                int ret = eventList.getEvent_BitmapSnapshot(i, bitmapSnapshot);
+                if(ret == 0) {
+                    String path = bitmapSnapshot.getPath();
+                    double time = bitmapSnapshot.getTime();
+
+                    WandVec4 srcVec = new WandVec4();
+                    bitmapSnapshot.getSrc(srcVec);
+
+                    WandVec4 distVec4 = new WandVec4();
+                    bitmapSnapshot.getDist(distVec4);
+
+                    Bitmap b = snapshotCache.getCache(path, time, distVec4);
+
+                    if(b != null){
+                        Paint p = new Paint();
+                        Rect dist = new Rect((int)distVec4.x(), (int)distVec4.y(), (int)distVec4.z(), (int)distVec4.w());
+                        canvas.drawBitmap(b, null, dist, p);
+                    }
+
+                    // Log.e("PPP", "Url: " + url);
+                    // Log.e("PPP", "x:" + srcVec.x() + ", y:" + srcVec.y() + ", z:" + srcVec.z() + ", w:" + srcVec.w());
+                }
+            }
+
         }
 
         eventList.destory();
@@ -199,6 +239,14 @@ public class EyerWandTimeLineView extends View {
 
             invalidate();
             return true;
+        }
+    }
+
+    private class MySnapshotCacheListener implements SnapshotCacheListener {
+
+        @Override
+        public void onLoad() {
+            invalidate();
         }
     }
 }
