@@ -22,6 +22,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += ../../Lib/EyerVideoWand/include
+INCLUDEPATH += ../../Lib/EyerLib/include
+
 CONFIG += c++11
 
 SOURCES += \
@@ -35,6 +38,29 @@ HEADERS += \
 
 FORMS += \
         MainWindow.ui
+
+
+LIBS += -L../../Lib/EyerVideoWand/lib -lEyerWand
+LIBS += -L../../Lib/EyerLib/lib -lEyerLib
+
+LIBS += -L../../Lib/ffmpeg_install/lib -lavcodec -lavutil -lavformat -lswscale -lswresample
+LIBS += -L../../Lib/x264_install/lib -lx264
+LIBS += -L../../Lib/freetype_install/lib -lfreetype
+
+LIBS += -lz -llzma -lbz2 -liconv
+
+LIBS += -framework AudioToolbox
+LIBS += -framework VideoDecodeAcceleration
+LIBS += -framework Security
+LIBS += -framework CoreGraphics
+LIBS += -framework CoreMedia
+LIBS += -framework Cocoa
+LIBS += -framework VideoToolbox
+LIBS += -framework AVFoundation
+LIBS += -framework CoreFoundation
+LIBS += -framework CoreVideo
+LIBS += -framework OpenGL
+LIBS += -framework AppKit
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

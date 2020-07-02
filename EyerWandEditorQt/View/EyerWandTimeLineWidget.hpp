@@ -2,7 +2,7 @@
 #define EYER_WAND_TIMELINE_H
 
 #include <QWidget>
-#include ""
+#include "EyerWand/EyerWand.hpp"
 
 namespace Eyer {
     class EyerWandTimeLineWidget : public QWidget
@@ -22,6 +22,7 @@ namespace Eyer {
 
     private:
         Eyer::WandTimeLine timeLine;
+        Eyer::EyerWandContext wandContext;
     };
 }
 
