@@ -2,6 +2,8 @@ package com.eyer.eyerwandeditor;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,8 +23,13 @@ public class EyerWandContextTestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wand_test);
+
+        getSupportActionBar().hide();
 
         eyer_wand_ctx_surfaceview = findViewById(R.id.eyer_wand_ctx_surfaceview);
         timeLineView = findViewById(R.id.timeLineView);

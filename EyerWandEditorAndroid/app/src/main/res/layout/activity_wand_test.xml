@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.eyer.ui.EyerWandUISurfaceView
             android:id="@+id/eyer_wand_ctx_surfaceview"
             android:layout_weight="1"
